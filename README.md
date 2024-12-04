@@ -29,13 +29,15 @@ The ESP32 is programmed using Arduino IDE to:
 
 ### AWS IoT Core
 1. Create a Thing in AWS IoT Core.
-2. Attach certificates and a policy to the Thing.
-3. Configure the ESP32 with the Thing’s credentials.
+   ![Create a Thing](images/thing.png)
+3. Attach certificates and a policy to the Thing.
+4. Configure the ESP32 with the Thing’s credentials.
 
 ### Grafana Visualization
 1. Use AWS CloudWatch or DynamoDB as the data source.
-2. Create a dashboard to visualize temperature and humidity over time.
-3. Example Dashboard:
+   ![AWS CloudWatch](images/cloudwatch.png)
+3. Create a dashboard to visualize temperature and humidity over time.
+4. Example Dashboard:
    ![Grafana Dashboard](images/grafana_dashboard.png)
 
 ## Results
@@ -56,6 +58,3 @@ The project successfully visualizes real-time sensor data. Below is a sample of 
 ## Future Improvements
 - Add more sensors (e.g., light, motion).
 - Implement smart lighting controls using AWS IoT Core.
-
-## License
-This project is licensed under the MIT License.
