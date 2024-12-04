@@ -58,3 +58,7 @@ The project successfully visualizes real-time sensor data. Below is a sample of 
 ## Future Improvements
 - Add more sensors (e.g., light, motion).
 - Implement smart lighting controls using AWS IoT Core.
+
+## Conclusion
+
+This project demonstrates the successful integration of IoT hardware with cloud services to collect, transmit, store, and visualize sensor data. The system is scalable and lays the groundwork for future IoT developments, such as adding more sensors or automation features.
