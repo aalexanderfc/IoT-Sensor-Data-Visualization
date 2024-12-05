@@ -1,77 +1,83 @@
 # IoT Sensor Data Visualization
 
 ## Introduction
-This project collects temperature and humidity data using a DHT11 sensor connected to an ESP32. The data is sent to AWS IoT Core, stored in DynamoDB, and visualized in Grafana via CloudWatch.
+This project collects temperature and humidity data using a DHT11 sensor connected to an ESP32. The data is sent to AWS IoT Core, stored in DynamoDB, and visualized using Grafana. Additionally, the system sends alerts to a Discord channel if thresholds for temperature or humidity are exceeded. DynamoDB data is periodically backed up to Amazon S3 for long-term storage and recovery.
 
 ## Features
 - Collects real-time temperature and humidity data.
 - Sends data securely using MQTT via AWS IoT Core.
 - Stores data in DynamoDB for long-term use.
-- Uses CloudWatch to stream and query DynamoDB data for visualization in Grafana.
+- Visualizes data with Grafana dashboards.
+- Sends notifications to Discord for threshold breaches.
+- Backs up DynamoDB data to Amazon S3 for additional redundancy.
 
 ## System Architecture
 ![System Architecture](images/system_architecture.png)
 
 ## Hardware Setup
-
 ### Components
 - **ESP32**: Microcontroller for data collection and transmission.
 - **DHT11 Sensor**: Measures temperature and humidity.
-- **LEDs**: (Optional) For smart lighting simulation.
 
 ### Wiring Diagram
 ![Wiring Diagram](images/wiring_diagram.png)
 
 ## Software Setup
-
 ### Arduino Code
 The ESP32 is programmed using Arduino IDE to:
 - Collect data from the DHT11 sensor.
 - Send data to AWS IoT Core using MQTT.
 
 ### AWS IoT Core
-1. **Create a Thing** in AWS IoT Core.  
+1. Create a Thing in AWS IoT Core.
    ![Create a Thing](images/thing.png)
-2. **Attach certificates** and a policy to the Thing.
-3. **Configure the ESP32** with the Thing’s credentials.
+3. Attach certificates and a policy to the Thing.
+4. Configure the ESP32 with the Thing’s credentials.
 
 ### DynamoDB and CloudWatch
-1. **DynamoDB**:
-   - Ensure a table is created to store sensor data (e.g., `SensorData`).
-2. **CloudWatch**:
-   - Configure a log group for streaming data from DynamoDB.
-   - Use AWS CloudWatch Logs Insights to query DynamoDB data.
-   - Connect CloudWatch with Grafana to visualize queried data.
+- Data is stored in DynamoDB for retrieval and analysis.
+- CloudWatch is used to log metrics and trigger Lambda functions.
+
+### S3 Backup
+- DynamoDB data is backed up to an S3 bucket for long-term storage and recovery. This ensures redundancy and facilitates data retrieval in case of accidental deletion or failure.
+
+### Discord Notifications
+- A Lambda function processes incoming telemetry and sends alerts to a Discord channel when thresholds are exceeded.
 
 ### Grafana Visualization
-1. Use **CloudWatch as a data source** in Grafana.  
+1. Use AWS CloudWatch or DynamoDB as the data source.
    ![AWS CloudWatch](images/cloudwatch.png)
-2. Create a dashboard to visualize temperature and humidity over time.
-3. Example Dashboard:  
+3. Create a dashboard to visualize temperature and humidity over time.
+4. Example Dashboard:
    ![Grafana Dashboard](images/grafana_dashboard.png)
 
 ## Results
-The project successfully visualizes real-time sensor data. Below is a sample of the Grafana dashboard:  
+The project successfully visualizes real-time sensor data, sends notifications, and backs up data. Below are examples:
+
+### Grafana Dashboard
 ![Sample Data](images/sample_data.png)
 
-## How to Run
+### Discord Notifications
+![Discord Notification](images/discord_notification.png)
 
+## How to Run
 1. **Set Up the Hardware**:
    - Connect the DHT11 sensor to the ESP32.
    - Upload the Arduino code.
 2. **AWS IoT Core**:
    - Set up MQTT topics for telemetry.
-3. **DynamoDB and CloudWatch**:
-   - Ensure the DynamoDB table is set up to store data.
-   - Configure CloudWatch to query and stream DynamoDB data.
-4. **Grafana**:
-   - Create a dashboard connected to CloudWatch for visualization.
+3. **DynamoDB**:
+   - Ensure the table is set up to store data.
+4. **Amazon S3**:
+   - Configure DynamoDB backup to S3 for redundancy.
+5. **Grafana**:
+   - Create a dashboard for visualization.
+6. **Discord Notifications**:
+   - Set up a webhook in Discord and update the Lambda function with the webhook URL.
 
 ## Future Improvements
 - Add more sensors (e.g., light, motion).
-- Automate alerts based on data thresholds using CloudWatch alarms.
-- Explore real-time analytics with AWS Kinesis or Timestream.
+- Implement advanced analytics on the collected data.
 
 ## Conclusion
-This project successfully integrates IoT hardware with cloud services to collect, store, and visualize sensor data using DynamoDB and CloudWatch with Grafana. The scalable design allows for future enhancements such as adding more sensors or automation features.
-
+This project demonstrates the successful integration of IoT hardware with cloud services to collect, transmit, store, and visualize sensor data while providing real-time notifications. With data backed up in Amazon S3, the system ensures redundancy and long-term storage, making it robust and scalable for future IoT developments.
