@@ -11,6 +11,18 @@ This project collects temperature and humidity data using a DHT11 sensor connect
 - Sends notifications to Discord for threshold breaches.
 - Backs up DynamoDB data to Amazon S3 for additional redundancy.
 
+## Scalability
+The project leverages AWS services that are inherently scalable, ensuring the system can handle increased load as more devices or data points are added:
+
+- **AWS IoT Core**: Supports millions of devices and messages, making it easy to scale horizontally without changes to the infrastructure.
+- **DynamoDB**: Automatically scales to accommodate spikes in traffic with on-demand capacity mode. Global tables enable multi-region replication for low-latency access.
+- **Amazon S3**: Provides virtually unlimited storage, ensuring long-term storage and redundancy as data grows.
+- **AWS Lambda**: Scales automatically with the number of incoming requests, ensuring seamless processing of data and notifications.
+- **CloudWatch**: Efficiently handles logs, metrics, and events from the system, providing real-time monitoring even with increasing devices.
+- **Grafana**: Supports integration with scalable data sources like CloudWatch and DynamoDB, making it suitable for monitoring large-scale deployments.
+
+This scalability ensures that the system is robust and future-proof, capable of handling additional devices, sensors, and users with minimal operational overhead.
+
 ## System Architecture
 ![System Architecture](images/system_architecture.png)
 
